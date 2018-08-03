@@ -1,0 +1,28 @@
+According to "man execve", execve() works with only with binary executable file or executable script file staring with line of the form "#! interpreter"
+
+eg: #!/bin/bash
+eg: #!/bin/zsh
+
+So therefore, if we pass any text file (with its respective path) in the <filename> field of this executable program, it will work only if:
+It is a script file in proper format supported by the current OS environment (LINUX)
+File must start with the interpreter declaration as mentioned above 
+
+Such an simple script file is saved as script.sh, and provided for just displaying a simple message on 'stdout'
+
+Usage: ./a.out <filename> ... <filename>
+
+In <filename> field,
+if an invalid filename is provided, it produces an error message as: "No such file or directory"
+if an text file provided, which is not a valid script file, it produces error message as : "Exec format error"
+
+Such an script file can be made as script.sh which just prints "HELLO WORLD"
+
+body of script.sh
+-------------------------------
+#!/bin/bash
+
+echo $"HELLO WORLD"
+--------------------------------
+Although in this program, child processes are executed in abnormal order since no synchronization is provided.
+Therefore, sometime messages printed by the child processes can may be out of oreder (most of the times)
+

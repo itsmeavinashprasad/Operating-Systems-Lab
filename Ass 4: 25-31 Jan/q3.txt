@@ -1,0 +1,62 @@
+In this program, after creating a child process, parent process waits for all its child processes to terminated
+
+using  
+pid_t waitpid(pid_t pid, int *wstatus, int options)
+< -1 , -1 , 0 or any process id is passed
+any interger variable of 8 bit (say stat) can be passed in the 2nd argument
+
+waitpid() returns a process id, of type pid_t, whose status is changed
+waitpid() also modifies 2nd argument i.e. "stat" to store the return status
+
+WIFEXITED(stat) return true for normal termination of process
+WEXITSTATUS(stat) returns the exit status, which is basically of type <int>
+
+whenever child process terminates normally, WEXITSTATUS(stat) values 0 or any positive integer
+however if child process terminates abnormally, WEITSTATUS(stat) gives 0
+In this case WTERMSIG(stat) can be used to detrmine which signal allows to terminate the child process
+
+Let's suppose two simple c programs, in which knowingly some error are programmed
+
+In div_by_zero.c, an int variable is tried to divide by zero. 
+If we simply comple and run this program then it causes "FLOATING POINT EXCEPTION"
+
+In scan_abnorm.c , scanf() is written such that whenever we compile and run this program, 
+it throws an error of type "SEGMENTATION FAULT"
+
+So, whenever we run this main program as
+./a.out /bin/ls ./script.sh ./div_by_zero ./scan_abnorm
+/bin/ls terminates normally, gives exit status 0 [NORMAL TERMINATION]
+script.sh terminates normally, gives exit status 0 [NORMAL TERMINATION]
+div_by_zero terminated via assembler, gives xit status 0, WTERMSIG() as 8 [ABNORMAL TERMINATION] 
+scan_abnorm terminated via assembler, gives xit status 0, WTERMSIG() as 11 [ABNORMAL TERMINATION]
+
+body of div_by_zero.c
+-----------------------------------------------------------------
+#include<stdio.h>
+int main()
+{
+	int x = 5;
+	x = x/0;
+	return 0;
+}
+-----------------------------------------------------------------
+
+body of scan_abnorm.c
+-----------------------------------------------------------------
+#include<stdio.h>
+int main()
+{
+	int x ;
+	scanf("%d", x);
+	return 0;
+}
+-----------------------------------------------------------------
+
+body of script.sh
+-----------------------------------------------------------------
+#!/bin/bash
+
+echo $"Output of the script file "
+echo $"HELLO WORLD"
+
+-----------------------------------------------------------------

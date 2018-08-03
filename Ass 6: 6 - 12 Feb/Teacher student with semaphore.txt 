@@ -1,0 +1,11 @@
+critical sections are marked in the codes itself
+shared resource is shared between single teacher process and multiple (may be) concurrently running student processes
+according to my assumption teacher process runs first and initialises semaphore (by value 1) and shared memory (by value -1)
+after that concurrent student processes can run
+flow control is managed by checking if roll is -1 or not
+also managed by incrementing and decrementing semaphores
+single semaphore array consisting only one semaphore is used
+student process before entering to the locks the shared resource
+after registering attendance of one student process it unlocks the shared resource for another student processes
+in this way P(s) and V(s) is done in two processes; student.c and teacher.c respectively
+

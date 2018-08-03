@@ -1,0 +1,6 @@
+Usage: 
+./a.out <filename 1> <n1 switches for filename 1> ... <filename m> <nm switches for filename m>
+
+Implementaion of this program is not so different from previous one. Only doing of some string manipulation, logic of this program can be found.
+
+Although, restriction with "filename" is similar tothe previous one, i.e. filename must be binary executable file or a valid script file
